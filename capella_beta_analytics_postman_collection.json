@@ -1,0 +1,349 @@
+{
+	"info": {
+		"_postman_id": "06d0920c-5b9c-447e-8acf-597afa516fe8",
+		"name": "AR Beta Analytic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20471691"
+	},
+	"item": [
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Search by Collect Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"collectId\": \"dd679709-5f52-4140-9713-5b226247a4cc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/betaAnalytics/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"betaAnalytics",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Collect Id & Product Type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productTypes\": [\n    \"AR\"\n  ],\n  \"collectId\": \"dd679709-5f52-4140-9713-5b226247a4cc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/betaAnalytics/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"betaAnalytics",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by BB, Datetime Range, Product Type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productTypes\": [\n    \"FL\", \"AR\"\n  ],\n  \"bbox\": [\n    131.0,\n    30.8,\n    142.0,\n    40.3\n  ],\n  \"datetime\": \"2021-03-27T07:26:11Z/2022-10-05T20:16:26Z\",\n  \"limit\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/betaAnalytics/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"betaAnalytics",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Datetime Range starting from",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productTypes\": [\n    \"FL\", \"AR\"\n  ],\n  \"datetime\": \"2021-03-25T00:00:00Z/..\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/betaAnalytics/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"betaAnalytics",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Datetime Range until with custom limit",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"productTypes\": [\n    \"FL\", \"AR\"\n  ],\n  \"datetime\": \"../2022-10-17T00:00:00Z\",\n  \"limit\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/betaAnalytics/search",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"betaAnalytics",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Trigger Creation AR",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/betaAnalytics/AR?collectId=a1fa062e-3ec4-41a1-ab62-f4af7b8c6eaf",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"betaAnalytics",
+						"AR"
+					],
+					"query": [
+						{
+							"key": "collectId",
+							"value": "a1fa062e-3ec4-41a1-ab62-f4af7b8c6eaf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authorize",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/betaAnalytics/status?collectId=a1fa062e-3ec4-41a1-ab62-f4af7b8c6eaf&productType=AR",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"betaAnalytics",
+						"status"
+					],
+					"query": [
+						{
+							"key": "collectId",
+							"value": "a1fa062e-3ec4-41a1-ab62-f4af7b8c6eaf"
+						},
+						{
+							"key": "productType",
+							"value": "AR"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
