@@ -1,0 +1,2144 @@
+{
+	"info": {
+		"_postman_id": "f0ade89c-39b8-40c2-a8bf-b7c4d01ceebb",
+		"name": "Github postman collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10393518"
+	},
+	"item": [
+		{
+			"name": "Access & Entitlement",
+			"item": [
+				{
+					"name": "Token (Login)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"accessToken\", jsonData.accessToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://{{apiUrl}}/token",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token (Logout)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"accessToken\", \"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://{{apiUrl}}/token",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"userId\", jsonData.id);",
+									"pm.environment.set(\"organizationId\", jsonData.organizationId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{apiUrl}}/user",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Catalog",
+			"item": [
+				{
+					"name": "Capabilities",
+					"item": [
+						{
+							"name": "Collections",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/catalog/collections/",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"catalog",
+										"collections",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "STAC search",
+					"item": [
+						{
+							"name": "Search by date",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"datetime\": \"2023-02-01T00:00:00.000Z/2023-02-10T23:59:59.999Z\",\n    \"collections\": [\n        \"capella-gec\",\n        \"capella-geo\",\n        \"capella-sicd\",\n        \"capella-slc\"\n    ],\n    \"limit\": 100,\n    \"page\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/catalog/search",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"catalog",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search by bounding box",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"intersects\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n            [\n                [\n                    -129.390557,\n                    23.851763\n                ],\n                [\n                    -58.452501,\n                    23.851763\n                ],\n                [\n                    -58.452501,\n                    51.255785\n                ],\n                [\n                    -129.390557,\n                    51.255785\n                ],\n                [\n                    -129.390557,\n                    23.851763\n                ]\n            ]\n        ]\n    },\n    \"collections\": [\n        \"capella-gec\",\n        \"capella-geo\",\n        \"capella-sicd\",\n        \"capella-slc\"\n    ],\n    \"limit\": 100,\n    \"page\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/catalog/search",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"catalog",
+										"search"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search by product type",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": {\n        \"sar:product_type\": {\n            \"eq\": \"GEO\"\n        }\n    },\n    \"collections\": [\n        \"capella-open-data\"\n    ],\n    \"limit\": 100,\n    \"page\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/catalog/search",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"catalog",
+										"search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Archive export",
+					"item": [
+						{
+							"name": "List archive export files",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/catalog/archive-export/available",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"catalog",
+										"archive-export",
+										"available"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Latest full gpkg archive export file",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"exportType\": \"full\",\n    \"exportFormat\": \"gpkg\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/catalog/archive-export/presigned",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"catalog",
+										"archive-export",
+										"presigned"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tasking",
+			"item": [
+				{
+					"name": "Mission awareness",
+					"item": [
+						{
+							"name": "Accessrequests",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"accessrequestId\", jsonData.properties.accessrequestId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n   \"type\": \"Feature\",\n   \"properties\":{\n        \"accessrequestName\": \"My access request name\",\n        \"accessrequestDescription\": \"My access request description\",\n        \"windowOpen\": \"2023-12-19T21:25:28.358Z\",\n        \"windowClose\": \"2023-12-26T21:25:28.358Z\",\n        \"accessConstraints\": {\n            \"offNadirMin\": 25,\n            \"offNadirMax\": 40,\n            \"imageLength\": 20000,\n            \"imageWidth\": 5000\n        }\n    },\n    \"geometry\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            -122.416315,\n            37.76123999999999\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/ma/accessrequests/",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"ma",
+										"accessrequests",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Accessrequest by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/ma/accessrequests/{{accessrequestId}}",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"ma",
+										"accessrequests",
+										"{{accessrequestId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Single task request",
+					"item": [
+						{
+							"name": "Standard Stripmap point task request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"taskingrequestId\", jsonData.properties.taskingrequestId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"Feature\",\n    \"geometry\": {\n        \"coordinates\": [\n            -122.416315,\n            37.76123999999999\n        ],\n        \"type\": \"Point\"\n    },\n    \"properties\": {\n        \"taskingrequestName\": \"Standard point task\",\n        \"taskingrequestDescription\": \"Stripmap example\",\n        \"windowOpen\": \"2023-12-19T22:57:57.284Z\",\n        \"windowClose\": \"2023-12-26T22:57:57.284Z\",\n        \"collectionTier\": \"standard\",\n        \"productCategory\": \"standard\",\n        \"collectConstraints\": {\n            \"collectMode\": \"stripmap\"\n        },\n        \"preApproval\": false\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/task",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Custom Spotlight point task request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"taskingrequestId\", jsonData.properties.taskingrequestId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"Feature\",\n    \"geometry\": {\n        \"coordinates\": [\n            -122.416315,\n            37.76123999999999\n        ],\n        \"type\": \"Point\"\n    },\n    \"properties\": {\n        \"taskingrequestName\": \"Custom point task\",\n        \"taskingrequestDescription\": \"Spotlight example\",\n        \"windowOpen\": \"2023-12-19T22:57:57.284Z\",\n        \"windowClose\": \"2023-12-26T22:57:57.284Z\",\n        \"collectionTier\": \"urgent\",\n        \"productCategory\": \"custom\",\n        \"collectConstraints\": {\n            \"collectMode\": \"spotlight\",\n            \"offNadirMin\": 35,\n            \"offNadirMax\": 50,\n            \"numLooks\": 3\n        },\n        \"preApproval\": false,\n        \"customAttribute1\": \"My attribute 1\",\n        \"customAttribute2\": \"My attribute 2\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/task",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Vessel Detection Stripmap",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"taskingrequestId\", jsonData.properties.taskingrequestId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"Feature\",\n    \"geometry\": {\n        \"coordinates\": [\n            -5.368401,\n            36.146137\n        ],\n        \"type\": \"Point\"\n    },\n    \"properties\": {\n        \"taskingrequestName\": \"Vessel Detection point task\",\n        \"taskingrequestDescription\": \"Stripmap vessel detection example\",\n        \"windowOpen\": \"2024-01-19T22:57:57.284Z\",\n        \"windowClose\": \"2024-01-26T22:57:57.284Z\",\n        \"collectionTier\": \"priority\",\n        \"productCategory\": \"extended\",\n        \"collectConstraints\": {\n            \"collectMode\": \"stripmap\"\n        },\n        \"preApproval\": false,\n        \"processingConfig\": {\n            \"productTypes\": [\"VS\"]\n        },\n        \"customAttribute1\": \"Vessel Detection\",\n        \"customAttribute2\": \"Port of Gibraltar\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/task",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Task request by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/task/{{taskingrequestId}}",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"task",
+										"{{taskingrequestId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Approve task request by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"approved\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/task/{{taskingrequestId}}/status",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"task",
+										"{{taskingrequestId}}",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel task request by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\":\"canceled\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/task/{{taskingrequestId}}/status",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"task",
+										"{{taskingrequestId}}",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Task requests for user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/tasks/paged?page=1&limit=500&customerId={{userId}}",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"tasks",
+										"paged"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "500"
+										},
+										{
+											"key": "customerId",
+											"value": "{{userId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Task requests search",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": {\n        \"lastStatusCode\": [\n            \"completed\",\n            \"accepted\",\n            \"active\"\n        ],\n        \"windowOpen\": \"2023-01-01T00:00:00Z/2023-12-31T23:59:59Z\",\n        \"includeRepeatingTasks\": false\n    },\n    \"sort\": \"taskingrequestName\",\n    \"order\": \"asc\",\n    \"page\": 1,\n    \"limit\": 500\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/tasks/search",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"tasks",
+										"search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Repeat task request",
+					"item": [
+						{
+							"name": "Standard Stripmap repeat task request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"repeatrequestId\", jsonData.properties.repeatrequestId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"Feature\",\n    \"geometry\": {\n        \"coordinates\": [\n            -122.416315,\n            37.76123999999999\n        ],\n        \"type\": \"Point\"\n    },\n    \"properties\": {\n        \"repeatrequestName\": \"Standard repeat task\",\n        \"repeatrequestDescription\": \"Stripmap example\",\n        \"repetitionProperties\": {\n            \"repeatStart\": \"2023-12-20T22:02:20.093Z\",\n            \"repetitionInterval\": 7,\n            \"repetitionCount\": 4,\n            \"maintainSceneFraming\": false\n        },\n        \"collectionTier\": \"routine\",\n        \"productCategory\": \"standard\",\n        \"collectConstraints\": {\n            \"collectMode\": \"stripmap\"\n        }\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/repeat-requests/",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"repeat-requests",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Custom Spotlight repeat point task request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"repeatrequestId\", jsonData.properties.repeatrequestId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"Feature\",\n    \"geometry\": {\n        \"coordinates\": [\n            -122.416315,\n            37.76123999999999\n        ],\n        \"type\": \"Point\"\n    },\n    \"properties\": {\n        \"repeatrequestName\": \"Custom repeat point task\",\n        \"repeatrequestDescription\": \"Spotlight example\",\n        \"repetitionProperties\": {\n            \"repeatStart\": \"2023-12-20T22:02:20.093Z\",\n            \"repetitionInterval\": 7,\n            \"repetitionCount\": 4,\n            \"maintainSceneFraming\": true,\n            \"lookAngleTolerance\": 5\n        },\n        \"collectionTier\": \"routine\",\n        \"productCategory\": \"custom\",\n        \"collectConstraints\": {\n            \"collectMode\": \"spotlight\",\n            \"offNadirMin\": 35,\n            \"offNadirMax\": 50,\n            \"numLooks\": 3\n        },\n        \"customAttribute1\": \"My attribute 1\",\n        \"customAttribute2\": \"My attribute 2\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/repeat-requests/",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"repeat-requests",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ACD Change Detection Spotlight repeat point task request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"repeatrequestId\", jsonData.properties.repeatrequestId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"Feature\",\n    \"geometry\": {\n        \"coordinates\": [\n            -122.416315,\n            37.76123999999999\n        ],\n        \"type\": \"Point\"\n    },\n    \"properties\": {\n        \"repeatrequestName\": \"Amplitude Change Detection repeat point task\",\n        \"repeatrequestDescription\": \"Repeat Request with ACD enabled\",\n        \"repetitionProperties\": {\n            \"repeatStart\": \"2023-01-20T22:02:20.093Z\",\n            \"repetitionInterval\": 7,\n            \"repetitionCount\": 5,\n            \"maintainSceneFraming\": true,\n            \"lookAngleTolerance\": 10\n        },\n        \"collectionTier\": \"routine\",\n        \"productCategory\": \"custom\",\n        \"collectConstraints\": {\n            \"collectMode\": \"spotlight\"\n        },\n        \"customAttribute1\": \"Amplitude Change Detection\",\n        \"customAttribute2\": \"My attribute 2\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/repeat-requests/",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"repeat-requests",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Repeat request by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/repeat-requests/{{repeatrequestId}}",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"repeat-requests",
+										"{{repeatrequestId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Approve repeat request by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"submitted\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/repeat-requests/{{repeatrequestId}}/status",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"repeat-requests",
+										"{{repeatrequestId}}",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel repeat request by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\": \"canceled\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/repeat-requests/{{repeatrequestId}}/status",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"repeat-requests",
+										"{{repeatrequestId}}",
+										"status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Repeat requests for user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/repeat-requests?userId={{userId}}",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"repeat-requests"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "{{userId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Repeat requests search",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": {\n        \"lastStatusCode\": [\n            \"completed\",\n            \"accepted\",\n            \"active\"\n        ],\n        \"collectConstraints.collectMode\": \"spotlight\"\n    },\n    \"sort\": \"repeatrequestName\",\n    \"order\": \"asc\",\n    \"page\": 1,\n    \"limit\": 500\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/repeat-requests/search",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"repeat-requests",
+										"search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Tiles and collects",
+					"item": [
+						{
+							"name": "Collects by task request ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (typeof jsonData[0] !== 'undefined') {",
+											"    pm.environment.set(\"collectId\", jsonData[0].collectId);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/collects/list/{{taskingrequestId}}",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"collects",
+										"list",
+										"{{taskingrequestId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Collects by collect ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/collects/{{collectId}}",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"collects",
+										"{{collectId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Collect status by collect ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/collects/status/{{collectId}}",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"collects",
+										"status",
+										"{{collectId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Data Access",
+			"item": [
+				{
+					"name": "Orders for user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/orders?customerId={{userId}}",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"orders"
+							],
+							"query": [
+								{
+									"key": "customerId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order by STAC ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"orderId\", jsonData.orderId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\":[{\n        \"collectionId\":\"capella-open-data\",\n        \"granuleId\":\"CAPELLA_C02_SP_GEC_HH_20210106050228_20210106050252\"\n    }]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/orders",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order by task request ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"orderId\", jsonData.orderId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/orders/task/{{taskingrequestId}}",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"orders",
+								"task",
+								"{{taskingrequestId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/orders/{{orderId}}",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{orderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download order by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/orders/{{orderId}}/download",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{orderId}}",
+								"download"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AOIs",
+			"item": [
+				{
+					"name": "AOIs for user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/aois",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aois"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AOI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"aoiId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"Feature\",\n    \"geometry\": {\n        \"type\": \"Polygon\",\n        \"coordinates\": [\n            [\n                [\n                    -109.232896,\n                    36.923473\n                ],\n                [\n                    -109.232896,\n                    41.088103\n                ],\n                [\n                    -101.860857,\n                    41.088103\n                ],\n                [\n                    -101.860857,\n                    36.923473\n                ],\n                [\n                    -109.232896,\n                    36.923473\n                ]\n            ]\n        ]\n    },\n    \"properties\": {\n        \"name\": \"Colorado\",\n        \"description\": \"Rough boundary of the State of Colorado\",\n        \"excludeOlderThanEnabled\": false,\n        \"active\": true,\n        \"excludeTaskedByOwnOrganization\": true\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/aois/",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aois",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AOI by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/aois/{{aoiId}}",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aois",
+								"{{aoiId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AOI by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"properties\": {\n        \"name\": \"Revised name\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/aois/{{aoiId}}",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aois",
+								"{{aoiId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AOI by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://{{apiUrl}}/aois/{{aoiId}}",
+							"protocol": "https",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"aois",
+								"{{aoiId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
