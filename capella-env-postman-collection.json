@@ -1,6 +1,6 @@
 {
-	"id": "94b60e2c-1755-4d4b-8830-29c7e97b79d5",
-	"name": "Github Postman Collection Copy",
+	"id": "6a6d3061-a8dc-4e63-9303-7ed6b1462ed6",
+	"name": "Github Postman Collection ENV",
 	"values": [
 		{
 			"key": "username",
@@ -84,6 +84,6 @@
 		}
 	],
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2024-01-05T20:30:04.307Z",
+	"_postman_exported_at": "2024-01-05T21:34:15.132Z",
 	"_postman_exported_using": "Postman/10.21.4"
 }
