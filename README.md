@@ -1,7 +1,8 @@
-#postman_collections
-Postman Collections for accessing the Capella Space API
+# Postman Collections for accessing the Capella Space API
 
-#Key Variables requiring user specification:#
+Use this collection and environment setup to use the Capella API from postman. 
+
+## Key Variables requiring user specification:
 
 Authentication: provide a user name and password for the associated Capella console user:
  - username
@@ -20,9 +21,9 @@ Updating the window_open and window_close:
  
 The additional environment variables specified are used by scripts to automate invoking endpoints more efficiently. 
 
-#Running the collection#
+## Running the collection
 
-##Authentication##
+### Authentication
 Authentication is required before running any other request. This uses the userid/password specified in the
 environment to retrieve a token. 
 
@@ -32,7 +33,7 @@ with the token just returned.
 
 All other requests are set up to use the current token from the environment variable. 
 
-##Folder Descriptions##
+## Folder Descriptions
 
 Requests are organized into the following folders. 
 
