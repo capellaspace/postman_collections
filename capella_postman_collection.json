@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "24dc784c-41ff-4ea0-bc9e-62d4e0066a84",
+		"_postman_id": "088fe49f-bb47-42fb-bc45-1f0c030d6ade",
 		"name": "Capella postman collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "10393518"
@@ -594,7 +594,7 @@
 					"name": "Single task request",
 					"item": [
 						{
-							"name": "Standard Stripmap point task request",
+							"name": "Standard Stripmap POINT task request",
 							"event": [
 								{
 									"listen": "test",
@@ -643,7 +643,7 @@
 							"response": []
 						},
 						{
-							"name": "Custom Spotlight point task request",
+							"name": "Custom Spotlight POINT task request",
 							"event": [
 								{
 									"listen": "test",
@@ -692,7 +692,56 @@
 							"response": []
 						},
 						{
-							"name": "Vessel Detection Stripmap",
+							"name": "Standard Stripmap AREA task request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"taskingrequestId\", jsonData.properties.taskingrequestId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{accessToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"Feature\",\n    \"geometry\": {\n        \"coordinates\": [\n            -122.416315,\n            37.76123999999999\n        ],\n        \"type\": \"Point\"\n    },\n    \"properties\": {\n        \"taskingrequestName\": \"Standard point task\",\n        \"taskingrequestDescription\": \"Stripmap example\",\n        \"windowOpen\": \"2023-12-19T22:57:57.284Z\",\n        \"windowClose\": \"2023-12-26T22:57:57.284Z\",\n        \"collectionTier\": \"standard\",\n        \"productCategory\": \"standard\",\n        \"collectConstraints\": {\n            \"collectMode\": \"stripmap\"\n        },\n        \"preApproval\": false\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{apiUrl}}/task",
+									"protocol": "https",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"task"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Vessel Detection Stripmap POINT task",
 							"event": [
 								{
 									"listen": "test",
